@@ -91,20 +91,19 @@ $(".list-group").on("click", "p", function () {
 
   // replace p element with a new textarea
   var textInput = $("<textarea>")
-  .addClass("form-control")
-  .val(text);
+    .addClass("form-control")
+    .val(text);
   $(this).replaceWith(textInput);
 
   //auto focus new element
   textInput.trigger("focus");
 });
 
-  //editable field was un-focused
-  $("list-group").on("blur", "textarea", function () {
-    // get current value of textarea
-  var text = $(this)
-    .val();
-    
+//editable field was un-focused
+$("list-group").on("blur", "textarea", function () {
+  // get current value of textarea
+  var text = $(this).val();
+
   // get status type and position in the list
   var status = $(this)
     .closest(".list-group")
@@ -118,7 +117,7 @@ $(".list-group").on("click", "p", function () {
   tasks[status][index].text = text;
   saveTasks();
 
- // recreate p element
+  // recreate p element
   var taskP = $("<p>")
     .addClass("m-1")
     .text(text);
@@ -148,7 +147,7 @@ $(".list-group").on("click", "span", function () {
 });
 
 // value of due date was changed
-$(".list-group").on("blur", "input[type='text']", function() {
+$(".list-group").on("blur", "input[type='text']", function () {
   // get current text
   var date = $(this)
     .val()
