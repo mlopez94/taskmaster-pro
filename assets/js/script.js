@@ -55,16 +55,18 @@ $(".card .list-group").sortable({
   tolerance: "pointer",
   helper: "clone",
   activate: function (event, ui) {
-    console.log(ui);
+    $(this).addClass("dropover");
+    $(".bottom-trash").addClass("bottom-trash-drag");
   },
   deactivate: function (event, ui) {
-    console.log(ui);
+    $(this).removeClass("dropover");
+    $(".bottom-trash").removeClass("bottom-trash-drag");
   },
   over: function (event) {
-    console.log(event);
+    $(event.target).addClass("dropover-active");
   },
   out: function (event) {
-    console.log(event);
+    $(event.target).removeClass("dropover-active");
   },
   update: function () {
     var tempArr = [];
@@ -101,19 +103,22 @@ $(".card .list-group").sortable({
 });
 
 // trash icon can be dropped onto
-$("trash").droppable({
+$("#trash").droppable({
   accept: ".card .list-group-item",
   tolerance: "touch",
   drop: function (event, ui) {
     // remove dragged element from the DOM
     ui.draggable.remove();
+    $(".bottom-trash").removeClass("bottom-trash-active");
 
   },
   over: function (event, ui) {
     console.log(ui);
+    $(".bottom-trash").addClass("bottom-trash-active");
   },
   out: function (event, ui) {
     console.log(ui);
+    $(".bottom-trash").removeClass("bottom-trash-active");
   }
 });
 
@@ -317,5 +322,14 @@ $("#remove-tasks").on("click", function () {
   saveTasks();
 });
 
+
+
 // load tasks for the first time
 loadTasks();
+
+//audit task every 30 min
+setInterval(function() {
+  $(".card .list-group-item").each(function(index, el) {
+    auditTask(el);
+  });
+}, 1800000);
